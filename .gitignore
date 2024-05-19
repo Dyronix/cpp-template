@@ -1,0 +1,6 @@
+# Directories
+# Visual Studio Code
+.vscode/
+
+# CMake output
+build/
