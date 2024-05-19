@@ -1,14 +1,16 @@
 cmake_minimum_required(VERSION 3.28)
 
+# Set project name and uppercase version
 SET(PROJECT_NAME "MyProject")
 SET(PROJECT_NAME_UPPER "")
 
-string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPER)
+string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPER) # Convert project name to uppercase
 
 project(${PROJECT_NAME})
 
 message(STATUS "Start generation of project with name: ${PROJECT_NAME}")
 
+# Check if the platform is 64-bit or 32-bit and set appropriate definitions
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     add_definitions(-D${PROJECT_NAME_UPPER}_PLATFORM_X64)
     message(STATUS "64 bit platform - adding definition: ${PROJECT_NAME_UPPER}_PLATFORM_X64")
@@ -19,6 +21,7 @@ else()
 	message( FATAL_ERROR "Unknown CPU architecture, CMAKE will exit." )
 endif()
 
+# Special settings for MSVC compiler
 if(MSVC)
 	# Remove the always defined _WINDOWS flag
 	# CPP
@@ -43,6 +46,7 @@ SET(SOURCE_THIRDPARTY_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/source/third-party)
 SET(SOURCE_RUNTIME_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/source/runtime)
 SET(SOURCE_TOOLS_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/source/tools)
 
+# Output the directory paths for debugging purposes
 MESSAGE(STATUS "SOURCE_THIRDPARTY_DIRECTORY: ${SOURCE_THIRDPARTY_DIRECTORY}")
 MESSAGE(STATUS "SOURCE_RUNTIME_DIRECTORY: ${SOURCE_RUNTIME_DIRECTORY}")
 MESSAGE(STATUS "SOURCE_TOOLS_DIRECTORY: ${SOURCE_TOOLS_DIRECTORY}")
@@ -51,6 +55,7 @@ MESSAGE(STATUS "SOURCE_TOOLS_DIRECTORY: ${SOURCE_TOOLS_DIRECTORY}")
 add_definitions(-DUNICODE)
 add_definitions(-D_UNICODE)
 
+# Add subdirectories for third-party, runtime, and tools source code
 add_subdirectory(${SOURCE_THIRDPARTY_DIRECTORY})
 add_subdirectory(${SOURCE_RUNTIME_DIRECTORY})
 add_subdirectory(${SOURCE_TOOLS_DIRECTORY})
